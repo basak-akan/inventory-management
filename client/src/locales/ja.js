@@ -6,6 +6,10 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    reports: 'レポート',
+    menu: 'メニューを開く',
+    toggleSidebar: 'サイドバーを切り替え',
+    mainNav: 'メインナビゲーション',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -44,6 +48,9 @@ export default {
     },
     inventoryShortages: {
       title: '在庫不足',
+      actions: '操作',
+      createPO: '発注書を作成',
+      viewPO: '発注書を表示',
       noShortages: '在庫不足なし - すべての注文を履行できます！',
       noData: '選択したフィルターのデータがありません',
       orderId: '注文ID',
@@ -76,6 +83,7 @@ export default {
   inventory: {
     title: '在庫',
     description: 'すべての在庫品目の追跡と管理',
+    loadError: '在庫の読み込みに失敗しました',
     stockLevels: '在庫レベル',
     skus: 'SKU',
     searchPlaceholder: '品目名で検索...',
@@ -157,8 +165,10 @@ export default {
       title: 'カテゴリ別支出',
       ofTotal: '全体の'
     },
+    loadError: '財務データの読み込みに失敗しました: {message}',
     transactions: {
       title: '最近の取引',
+      detailsTitle: '取引の詳細',
       id: 'ID',
       description: '説明',
       vendor: 'ベンダー',
@@ -171,6 +181,7 @@ export default {
   demand: {
     title: '需要予測',
     description: '需要動向の分析と将来のニーズの予測',
+    loadError: '需要予測の読み込みに失敗しました',
     increasingDemand: '需要増加',
     stableDemand: '需要安定',
     decreasingDemand: '需要減少',
@@ -189,7 +200,70 @@ export default {
   },
 
   // Filters
+  reports: {
+    title: 'パフォーマンスレポート',
+    description: '四半期の業績指標と月次トレンドを表示します',
+    loading: 'レポートを読み込み中...',
+    loadFailed: 'レポートの読み込みに失敗しました: {message}',
+    notAvailable: '該当なし',
+    quarterlyPerformance: '四半期の業績',
+    monthlyRevenueTrend: '月次売上トレンド',
+    monthOverMonth: '前月比分析',
+    quarterLabel: '{year}年第{quarter}四半期',
+    table: {
+      quarter: '四半期',
+      totalOrders: '総注文数',
+      totalRevenue: '総売上',
+      avgOrderValue: '平均注文額',
+      fulfillmentRate: '出荷達成率',
+      month: '月',
+      orders: '注文数',
+      revenue: '売上',
+      change: '増減',
+      growthRate: '成長率'
+    },
+    stats: {
+      totalRevenueYtd: '総売上(年初来)',
+      avgMonthlyRevenue: '月平均売上',
+      totalOrdersYtd: '総注文数(年初来)',
+      bestQuarter: '最高業績の四半期'
+    }
+  },
+
+  backlog: {
+    title: 'バックログ管理',
+    description: '在庫不足の追跡と解消',
+    loading: 'バックログを読み込み中...',
+    loadFailed: 'バックログの読み込みに失敗しました: {message}',
+    items: 'バックログ項目',
+    empty: 'バックログ項目はありません - すべての注文を履行できます',
+    stats: {
+      high: '優先度: 高',
+      medium: '優先度: 中',
+      low: '優先度: 低',
+      total: 'バックログ項目合計'
+    },
+    table: {
+      orderId: '注文ID',
+      sku: 'SKU',
+      itemName: '品名',
+      quantityNeeded: '必要数量',
+      quantityAvailable: '利用可能数量',
+      shortage: '不足数',
+      daysDelayed: '遅延日数',
+      priority: '優先度'
+    },
+    unitsShort: '{count}個不足',
+    daysCount: '{count}日',
+    priority: {
+      high: '高',
+      medium: '中',
+      low: '低'
+    }
+  },
+
   filters: {
+    resetAll: 'すべてのフィルターをリセット',
     timePeriod: '期間',
     location: '場所',
     category: 'カテゴリ',
@@ -294,6 +368,57 @@ export default {
   },
 
   // Tasks Modal
+  modal: {
+    common: {
+      sku: 'SKU: {sku}',
+      units: '{count} 個',
+      reorderPoint: '発注点',
+      warehouse: '倉庫',
+      status: 'ステータス',
+      notAvailable: '該当なし'
+    },
+    inventory: {
+      title: '在庫アイテム詳細',
+      quantityOnHand: '現在庫数',
+      stockLevel: '在庫レベル',
+      vsReorderPoint: '発注点との比較',
+      unitsRemaining: '残数量',
+      unitCost: '単価',
+      totalValue: '合計金額',
+      unknown: '不明'
+    },
+    product: {
+      title: '製品詳細',
+      unitsOrdered: '注文数量',
+      totalRevenue: '総売上',
+      currentStock: '現在の在庫',
+      firstOrderDate: '初回注文日',
+      stockStatus: '在庫状況',
+      outOfStock: '在庫切れ'
+    },
+    cost: {
+      title: '{month}のコスト内訳',
+      totalCosts: '総コスト',
+      procurement: '調達',
+      operational: '運用',
+      labor: '人件費',
+      overhead: '間接費',
+      percentOfTotal: '全体の{percent}%'
+    },
+    backlog: {
+      title: '在庫不足の詳細',
+      priorityBadge: '優先度: {priority}',
+      shortageAmount: '不足数量',
+      daysDelayed: '遅延日数',
+      daysValue: '{count}日',
+      orderId: '注文ID',
+      itemSku: '商品SKU',
+      quantityNeeded: '必要数量',
+      quantityAvailable: '利用可能数量',
+      expectedDate: '納入予定日'
+    }
+  },
+
   tasks: {
     title: 'マイタスク',
     taskTitle: 'タスク名',
@@ -301,7 +426,17 @@ export default {
     priority: '優先度',
     dueDate: '期限',
     addTask: 'タスクを追加',
-    noTasks: 'タスクがありません。上記からタスクを追加してください！'
+    noTasks: 'タスクがありません。上記からタスクを追加してください！',
+    deleteTask: 'タスクを削除',
+    today: '今日',
+    tomorrow: '明日',
+    yesterday: '昨日',
+    daysAgo: '{count}日前',
+    inDays: '{count}日後',
+    completed: '完了',
+    overdue: '期限超過',
+    dueSoon: 'もうすぐ期限',
+    upcoming: '予定'
   },
 
   // Language

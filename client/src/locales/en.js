@@ -6,6 +6,10 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    reports: 'Reports',
+    menu: 'Open menu',
+    toggleSidebar: 'Toggle sidebar',
+    mainNav: 'Main navigation',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -44,6 +48,9 @@ export default {
     },
     inventoryShortages: {
       title: 'Inventory Shortages',
+      actions: 'Actions',
+      createPO: 'Create PO',
+      viewPO: 'View PO',
       noShortages: 'No inventory shortages - all orders can be fulfilled!',
       noData: 'No inventory data for selected filters',
       orderId: 'Order ID',
@@ -76,6 +83,7 @@ export default {
   inventory: {
     title: 'Inventory',
     description: 'Track and manage all inventory items',
+    loadError: 'Failed to load inventory',
     stockLevels: 'Stock Levels',
     skus: 'SKUs',
     searchPlaceholder: 'Search by item name...',
@@ -111,6 +119,7 @@ export default {
     avgOrderValue: 'Avg Order Value',
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
+    itemsCount_one: '{count} item',
     quantity: 'Qty',
     table: {
       orderNumber: 'Order Number',
@@ -157,8 +166,10 @@ export default {
       title: 'Spending by Category',
       ofTotal: 'of total'
     },
+    loadError: 'Failed to load financial data: {message}',
     transactions: {
       title: 'Recent Transactions',
+      detailsTitle: 'Transaction Details',
       id: 'ID',
       description: 'Description',
       vendor: 'Vendor',
@@ -171,10 +182,12 @@ export default {
   demand: {
     title: 'Demand Forecast',
     description: 'Analyze demand trends and forecasts',
+    loadError: 'Failed to load demand forecasts',
     increasingDemand: 'Increasing Demand',
     stableDemand: 'Stable Demand',
     decreasingDemand: 'Decreasing Demand',
     itemsCount: '{count} items',
+    itemsCount_one: '{count} item',
     more: 'more...',
     demandForecasts: 'Demand Forecasts',
     table: {
@@ -189,7 +202,70 @@ export default {
   },
 
   // Filters
+  reports: {
+    title: 'Performance Reports',
+    description: 'View quarterly performance metrics and monthly trends',
+    loading: 'Loading reports...',
+    loadFailed: 'Failed to load reports: {message}',
+    notAvailable: 'N/A',
+    quarterlyPerformance: 'Quarterly Performance',
+    monthlyRevenueTrend: 'Monthly Revenue Trend',
+    monthOverMonth: 'Month-over-Month Analysis',
+    quarterLabel: 'Q{quarter}-{year}',
+    table: {
+      quarter: 'Quarter',
+      totalOrders: 'Total Orders',
+      totalRevenue: 'Total Revenue',
+      avgOrderValue: 'Avg Order Value',
+      fulfillmentRate: 'Fulfillment Rate',
+      month: 'Month',
+      orders: 'Orders',
+      revenue: 'Revenue',
+      change: 'Change',
+      growthRate: 'Growth Rate'
+    },
+    stats: {
+      totalRevenueYtd: 'Total Revenue (YTD)',
+      avgMonthlyRevenue: 'Avg Monthly Revenue',
+      totalOrdersYtd: 'Total Orders (YTD)',
+      bestQuarter: 'Best Performing Quarter'
+    }
+  },
+
+  backlog: {
+    title: 'Backlog Management',
+    description: 'Track and resolve inventory shortages',
+    loading: 'Loading backlog...',
+    loadFailed: 'Failed to load backlog: {message}',
+    items: 'Backlog Items',
+    empty: 'No backlog items - all orders can be fulfilled!',
+    stats: {
+      high: 'High Priority',
+      medium: 'Medium Priority',
+      low: 'Low Priority',
+      total: 'Total Backlog Items'
+    },
+    table: {
+      orderId: 'Order ID',
+      sku: 'SKU',
+      itemName: 'Item Name',
+      quantityNeeded: 'Quantity Needed',
+      quantityAvailable: 'Quantity Available',
+      shortage: 'Shortage',
+      daysDelayed: 'Days Delayed',
+      priority: 'Priority'
+    },
+    unitsShort: '{count} units short',
+    daysCount: '{count} days',
+    priority: {
+      high: 'high',
+      medium: 'medium',
+      low: 'low'
+    }
+  },
+
   filters: {
+    resetAll: 'Reset all filters',
     timePeriod: 'Time Period',
     location: 'Location',
     category: 'Category',
@@ -294,6 +370,57 @@ export default {
   },
 
   // Tasks Modal
+  modal: {
+    common: {
+      sku: 'SKU: {sku}',
+      units: '{count} units',
+      reorderPoint: 'Reorder Point',
+      warehouse: 'Warehouse',
+      status: 'Status',
+      notAvailable: 'N/A'
+    },
+    inventory: {
+      title: 'Inventory Item Details',
+      quantityOnHand: 'Quantity on Hand',
+      stockLevel: 'Stock Level',
+      vsReorderPoint: 'vs. reorder point',
+      unitsRemaining: 'Units Remaining',
+      unitCost: 'Unit Cost',
+      totalValue: 'Total Value',
+      unknown: 'Unknown'
+    },
+    product: {
+      title: 'Product Details',
+      unitsOrdered: 'Units Ordered',
+      totalRevenue: 'Total Revenue',
+      currentStock: 'Current Stock',
+      firstOrderDate: 'First Order Date',
+      stockStatus: 'Stock Status',
+      outOfStock: 'Out of Stock'
+    },
+    cost: {
+      title: '{month} Cost Breakdown',
+      totalCosts: 'Total Costs',
+      procurement: 'Procurement',
+      operational: 'Operational',
+      labor: 'Labor',
+      overhead: 'Overhead',
+      percentOfTotal: '{percent}% of total'
+    },
+    backlog: {
+      title: 'Inventory Shortage Details',
+      priorityBadge: '{priority} Priority',
+      shortageAmount: 'Shortage Amount',
+      daysDelayed: 'Days Delayed',
+      daysValue: '{count} days',
+      orderId: 'Order ID',
+      itemSku: 'Item SKU',
+      quantityNeeded: 'Quantity Needed',
+      quantityAvailable: 'Quantity Available',
+      expectedDate: 'Expected Date'
+    }
+  },
+
   tasks: {
     title: 'My Tasks',
     taskTitle: 'Task Title',
@@ -301,7 +428,17 @@ export default {
     priority: 'Priority',
     dueDate: 'Due Date',
     addTask: 'Add Task',
-    noTasks: 'No tasks yet. Add your first task above!'
+    noTasks: 'No tasks yet. Add your first task above!',
+    deleteTask: 'Delete task',
+    today: 'today',
+    tomorrow: 'tomorrow',
+    yesterday: 'yesterday',
+    daysAgo: '{count} days ago',
+    inDays: 'in {count} days',
+    completed: 'Completed',
+    overdue: 'Overdue',
+    dueSoon: 'Due Soon',
+    upcoming: 'Upcoming'
   },
 
   // Language

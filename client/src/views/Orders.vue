@@ -51,10 +51,11 @@
                 <td class="col-items">
                   <details class="items-details">
                     <summary class="items-summary">
+                      <NavIcon name="chevron-right" />
                       {{ t('orders.itemsCount', { count: order.items.length }) }}
                     </summary>
                     <div class="items-dropdown">
-                      <div v-for="(item, idx) in order.items" :key="idx" class="item-entry">
+                      <div v-for="item in order.items" :key="item.name" class="item-entry">
                         <span class="item-name">{{ translateProductName(item.name) }}</span>
                         <span class="item-meta">{{ t('orders.quantity') }}: {{ item.quantity }} @ {{ currencySymbol }}{{ item.unit_price }}</span>
                       </div>
@@ -83,9 +84,11 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { api } from '../api'
 import { useFilters } from '../composables/useFilters'
 import { useI18n } from '../composables/useI18n'
+import NavIcon from '../components/NavIcon.vue'
 
 export default {
   name: 'Orders',
+  components: { NavIcon },
   setup() {
     const { t, currentCurrency, translateProductName, translateCustomerName } = useI18n()
 
@@ -175,33 +178,15 @@ export default {
 /* Fixed table layout to prevent column shifting */
 .orders-table {
   table-layout: fixed;
-  width: 100%;
 }
 
 /* Column widths */
-.col-order-number {
-  width: 130px;
-}
-
-.col-customer {
-  width: 180px;
-}
-
-.col-items {
-  width: 200px;
-}
-
-.col-status {
-  width: 130px;
-}
-
-.col-date {
-  width: 140px;
-}
-
-.col-value {
-  width: 120px;
-}
+.col-order-number { width: 130px; }
+.col-customer { width: 180px; }
+.col-items { width: 200px; }
+.col-status { width: 130px; }
+.col-date { width: 140px; }
+.col-value { width: 120px; }
 
 /* Items details styling */
 .items-details {
@@ -210,31 +195,31 @@ export default {
 
 .items-summary {
   cursor: pointer;
-  color: #3b82f6;
+  color: var(--color-accent);
   font-weight: 500;
   list-style: none;
   user-select: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .items-summary::-webkit-details-marker {
   display: none;
 }
 
-.items-summary::before {
-  content: '▶';
-  display: inline-block;
-  margin-right: 0.375rem;
-  font-size: 0.75rem;
-  transition: transform 0.2s;
+/* Chevron icon rotates when the <details> element is open */
+.items-summary :deep(.nav-icon) {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition-base);
 }
 
-.items-details[open] .items-summary::before {
+.items-details[open] .items-summary :deep(.nav-icon) {
   transform: rotate(90deg);
 }
 
 .items-summary:hover {
-  color: #2563eb;
   text-decoration: underline;
 }
 
@@ -243,12 +228,12 @@ export default {
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 0.5rem;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 0.75rem;
+  margin-top: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hover);
+  padding: var(--space-3);
   z-index: 10;
   min-width: 300px;
   max-width: 400px;
@@ -257,9 +242,9 @@ export default {
 .item-entry {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.5rem;
-  border-bottom: 1px solid #f1f5f9;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-hover);
 }
 
 .item-entry:last-child {
@@ -267,13 +252,20 @@ export default {
 }
 
 .item-name {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
-  color: #0f172a;
+  color: var(--color-ink);
 }
 
 .item-meta {
-  font-size: 0.813rem;
-  color: #64748b;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+@media (max-width: 899px) {
+  .items-dropdown {
+    min-width: 240px;
+    max-width: 80vw;
+  }
 }
 </style>
