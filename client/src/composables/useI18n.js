@@ -11,6 +11,24 @@ const translations = {
 const savedLocale = localStorage.getItem('app-locale') || 'en'
 const currentLocale = ref(savedLocale)
 
+// Mirror the active locale onto <html lang> so screen readers and browser font
+// fallback treat the page as Japanese when ja is selected. index.html ships lang="en".
+const applyDocumentLang = (locale) => {
+  document.documentElement.lang = locale
+}
+applyDocumentLang(currentLocale.value)
+
+// True when `path` (dot-separated) resolves to a string in the active locale.
+// Used to look up optional keys such as `<key>_one` without falling back to English.
+const hasTranslation = (path) => {
+  let value = translations[currentLocale.value]
+  for (const k of path.split('.')) {
+    if (!value || typeof value !== 'object') return false
+    value = value[k]
+  }
+  return typeof value === 'string'
+}
+
 // Currency is automatically set based on locale (en -> USD, ja -> JPY)
 const currentCurrency = computed(() => {
   return currentLocale.value === 'ja' ? 'JPY' : 'USD'
@@ -18,6 +36,12 @@ const currentCurrency = computed(() => {
 
 export function useI18n() {
   const t = (key, params = {}) => {
+    // Singular form: when count is 1 and a `<key>_one` entry exists, use it so
+    // English reads "1 item" rather than "1 items". Japanese has no plural forms,
+    // so ja entries omit `_one` and keep the single key.
+    if (params.count === 1 && hasTranslation(`${key}_one`)) {
+      key = `${key}_one`
+    }
     const keys = key.split('.')
     let value = translations[currentLocale.value]
 
@@ -61,6 +85,7 @@ export function useI18n() {
     if (translations[locale]) {
       currentLocale.value = locale
       localStorage.setItem('app-locale', locale)
+      applyDocumentLang(locale)
     }
   }
 
